@@ -8,9 +8,24 @@
         
         <!-- Bootstrap core CSS -->
         <link href="{{url_for('static', filename='bootstrap.min.css')}}" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
         
         <!-- Custom styles for this template -->
         <link href="{{url_for('static', filename='blog.css')}}" rel="stylesheet"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+        <script src="{{url_for('static', filename='bootstrap.min.js')}}"></script>
+        <script>
+            $(document).ready(function () {
+                              var url = window.location;
+                              $('.active').removeClass('active');
+                              
+                              // Will also work for relative and absolute hrefs
+                              $('nav.blog-nav a').filter(function () {
+                                                   return this.href == url;
+                                                   }).addClass('active');
+                              });
+            </script>
     </head>
     
     <body>
@@ -31,14 +46,6 @@
             <p>Blog by Claire Miller</p>
         </footer>
         
-        
-        <!-- Bootstrap core JavaScript
-         ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-        <script src="{{url_for('static', filename='bootstrap.min.js')}}"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
     </body>
 </html>
