@@ -1,0 +1,14 @@
+dill==0.2.5
+Flask==0.11.1
+gunicorn==19.6.0
+Jinja2==2.8
+oauth==1.0.1
+oauthlib==0.7.2
+requests==2.11.1
+simplejson==3.10.0
+numpy==1.11.1
+scipy==0.18.1
+pandas==0.18.1
+flask_wtf
+wtforms
+sklearn

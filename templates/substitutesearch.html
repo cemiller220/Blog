@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    
+    <div class="row">
+        
+        <div class="col-sm-8 blog-main">
+            
+            <div class="blog-post">
+                <h2 class="blog-post-title" style="margin-top: 50px">Substitute Search</h2>
+                <p class="blog-post-meta">May 1, 2017</p>
+                
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When becoming a substitute teacher at Chicago Public Schools, I wanted an easy way to search for job openings each day. I decided to see if I could write a program to search the long list of jobs for me and tell me which job would be good to take. It was also a good way to brush up on my web scraping skills.</p>
+                <br>
+                <h3>Code Basics</h3>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I started by writing a script to parse the html and pull out all the details of each job and put them into a Pandas dataframe for easy filtering. I created a list of schools I was willing to travel to, and filtered the dataframe to only include those schools and print out the results for the day of interest.</p>
+                <p> The basic scraping and parsing code is shown below: </p>
+                <pre><code>m = re.search('availJobs: ({.*})',str(script))
+jobs = json.loads(m.group(1))</code></pre>
+                <pre><code>for job in jobs['list']:
+    multiday = 'N'
+    if len(job['Items']) != 1:
+        multiday = 'Y'
+    school = job['Items'][0]['Institution']['Name']
+    start_date = job['Items'][0]['Start'].split('T')[0]
+    start_time = job['Items'][0]['Start'].split('T')[1]
+    end_date = job['Items'][-1]['End'].split('T')[0]
+    end_time = job['Items'][-1]['End'].split('T')[1]
+    name = job['WorkerFirstName'] + ' ' + job['WorkerLastName']
+    notes = T_F[job['HasNotes']]
+    address = job['Items'][0]['Institution']['Street1']
+    zip_code = int(job['Items'][0]['Institution']['Zip'].strip())</code></pre>
+                <br>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The one issue I ran into was accessing the page through python. The login page was subject to many redirects that would eventually time out. Unfortunately, I was not able to work around this problem despite my best efforts, so I created the program to read in a saved webpage instead.</p>
+                <br>
+                <h3>Additional Features </h3>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; While just filtering the results for good schools would have been enough, I decided to add a few extra features to the program. First, I loaded in a data file of Chicago neighborhoods by zipcode to match each school to its neighborhood. This allowed me to easily get a better idea of where the school was located. Also, I added a folium map that would plot all the schools, and display the name when you clicked on the marker. A sample map can be seen below:</p>
+                <img src="{{url_for('static', filename='images/map.png')}}" style="max-width: 100%; display:block; margin:auto;"></img>
+                <br>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The other feature I added was searching for what subject the teacher taught. I did this in a few ways. First, I included a list of the staff webpages for many of the schools and for any that used the standard CPS website, I wrote a script to parse them to pull out the subject. Many schools created their own staff directory page though so I couldn't create a generic scraping script for all of them. So instead, I used the google search libray in Python to search for the teacher's name and school and display the top three links to easy click and view them.</p>
+                <pre><code>for url in search('%s %s CPS'%(assignment['Teacher_name'],assignment['School']), tld='com', lang='en', num=3, stop=1):
+    print url</pre></code>
+                <br>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Putting all this together, I found many substitute teaching jobs much quicker than scrolling through the long list of absent teachers. This was especially convenient when looking for a job at 5 am the morning of!</p>
+                <br>
+                <p style="text-align: right"><a href="https://github.com/cemiller220/substituteSearch/blob/master/substituteSearch.ipynb">Full Github Code</a></p>
+            </div><!-- /.blog-post -->
+            
+            <nav>
+                <ul class="pager">
+                    <li><a href="/hopoffhopon">Previous</a></li>
+                    <li><a href="/makingtheblog">Next</a></li>
+                </ul>
+            </nav>
+            
+        </div>
+        
+    </div>
+    
+</div>
+{% endblock %}

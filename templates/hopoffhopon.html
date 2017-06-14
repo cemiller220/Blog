@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    
+    <div class="row">
+        
+        <div class="col-sm-8 blog-main">
+            
+            <div class="blog-post">
+                <h2 class="blog-post-title" style="margin-top: 50px">Hop Off, Hop On</h2>
+                <p class="blog-post-meta">February 7, 2017</p>
+                
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Hop Off, Hop On</i> was the title of my capstone project at <a href="http://www.thedataincubator.com">The Data Incubator</a>, an 8-week data science bootcamp that I attended this past January and February. The purpose of the project was to create a web application to predict the crowdedness of NYC subway stations and help make transfers more convenient. I used a combination of the subway schedule data and taxi ride data to complete the project.</p>
+                <br>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The tools I used for this project included many Python libraries, such as Pandas, Numpy, Scikit-learn, and Matplotlib, web development with Flask and HTML, and interactive data visualization with Javascript (specifically nvd3 and dc.js).</p>
+                <br>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To see the completed project, I encourage you to check out the final website <a href="http://hop-off-hop-on.herokuapp.com">hop-off-hop-on.herokuapp.com</a>. There you can read more details about how I did my analysis and use the application to look up your desired subway route. </p>
+            
+            </div><!-- /.blog-post -->
+            
+            <nav>
+                <ul class="pager">
+                    <li><a href="/substitutesearch">Next</a></li>
+                </ul>
+            </nav>
+            
+        </div>
+        
+    </div>
+
+</div>
+{% endblock %}
