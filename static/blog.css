@@ -36,18 +36,19 @@ h6, .h6 {
  */
 
 .blog-masthead {
-  background-color: #428bca;
-  -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
-          box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+    background-color: #c78dce;
+  -webkit-box-shadow: inset 0 -10px 5px rgba(0,0,0,.1);
+          box-shadow: inset 0 -10px 5px rgba(0,0,0,.1);
 }
 
 /* Nav links */
 .blog-nav-item {
   position: relative;
   display: inline-block;
-  padding: 10px;
-  font-weight: 500;
-  color: #cdddeb;
+  padding: 20px 20px;
+  font-weight: bold;
+  font-size: 14pt;
+  color: black;
 }
 .blog-nav-item:hover,
 .blog-nav-item:focus {
