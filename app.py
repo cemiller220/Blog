@@ -30,5 +30,9 @@ def substitutesearch():
 def makingtheblog():
     return render_template('makingtheblog.html')
 
+@app.route('/instacart')
+def instacart():
+    return render_template('instacart.html')
+
 if __name__ == '__main__':
     app.run(port=33507,debug=True)
