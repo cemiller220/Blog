@@ -35,7 +35,7 @@ jobs = json.loads(m.group(1))</code></pre>
                 <br>
                 <h3>Additional Features </h3>
                 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; While just filtering the results for good schools would have been enough, I decided to add a few extra features to the program. First, I loaded in a data file of Chicago neighborhoods by zipcode to match each school to its neighborhood. This allowed me to easily get a better idea of where the school was located. Also, I added a folium map that would plot all the schools, and display the name when you clicked on the marker. A sample map can be seen below:</p>
-                <img src="{{url_for('static', filename='images/map.png')}}" style="max-width: 100%; display:block; margin:auto;"></img>
+                <img src="{{url_for('static', filename='images/substitute/map.png')}}" style="max-width: 100%; display:block; margin:auto;"></img>
                 <br>
                 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The other feature I added was searching for what subject the teacher taught. I did this in a few ways. First, I included a list of the staff webpages for many of the schools and for any that used the standard CPS website, I wrote a script to parse them to pull out the subject. Many schools created their own staff directory page though so I couldn't create a generic scraping script for all of them. So instead, I used the google search libray in Python to search for the teacher's name and school and display the top three links to easy click and view them.</p>
                 <pre><code>for url in search('%s %s CPS'%(assignment['Teacher_name'],assignment['School']), tld='com', lang='en', num=3, stop=1):

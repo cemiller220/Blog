@@ -14,7 +14,62 @@
                 <br>
                 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You can view my analysis thus far on my <a href="https://github.com/cemiller220/Instacart">github</a>. This page will be updated periodically to show my findings.</p>
                 <br>
-                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <h2>Exploratory Analysis</h2>
+                <h3>Customer Habits</h3>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I started by exploring the data set to understand some of the basic human patterns shown. </p>
+                <br>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; First, I looked at the number of orders per customer. All customers have at least 4 orders and at most 100. These are probably limits instacart set for the competition. Because there is a small spike at 100, I believe 100 represents 100 or more orders. The plot shows an expected trend that there are fewer customers with more orders (skewed histogram). </p>
+                <img src="{{url_for('static', filename='images/instacart/orders.png')}}"></img>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Next, I examined when orders were placed. Although there is no description of which days correspond to which numbers for the day of the week, I would assume 0 and 1 are Saturday and Sunday because they have the most orders. Orders are mostly placed during the day between 9-5. Looking at the frequency of orders, we can see that many customers like to order on the same day of the week either 7, 14, 21, or 28 days later. Once again 30 days appears to be a cut off value, and likely represents 30 or more days. </p>
+                <img src="{{url_for('static', filename='images/instacart/day.png')}}" style="float: left; width: 50%"></img>
+                <img src="{{url_for('static', filename='images/instacart/time.png')}}" style="float: left; width:50%"></img>
+                <img src="{{url_for('static', filename='images/instacart/freq.png')}}"></img>
+                <h3>Product Habits</h3>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Since the competition is about predicting which items are reordered, I explored the types of products that get ordered and reordered frequently. Out of all products orders, about 59% of them were reordered. However, this number includes products from customers first orders, none of which could be reordered. So I repeated this analysis on only order numbers 2 and above and the percent of items that were reordered increased to about 63%.</p>
+                <img src="{{url_for('static', filename='images/instacart/pct_reordered.png')}}" style="float: left;"></img>
+                <img src="{{url_for('static', filename='images/instacart/pct_reordered_not1.png')}}"></img>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I also looked to see if there was any correlation between the order number and percent of products reordered and there appears to be a strong correlation. Higher order number implies more reordered products</p>
+                <img src="{{url_for('static', filename='images/instacart/reorder_by_num.png')}}"></img>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 20 items ordered the most often are: </p>
+                <table border="1">
+                    <tr><td>Banana</td><td>Bag of Organic Bananas</td><td>Organic Strawberries</td><td>Organic Baby Spinach</td></tr>
+                    <tr><td>Organic Hass Avocado</td><td>Organic Avocado</td><td>Large Lemon</td><td>Strawberries</td></tr>
+                    <tr><td>Limes</td><td>Organic Whole Milk</td><td>Organic Raspberries</td><td>Organic Yellow Onion</td></tr>
+                    <tr><td>Organic Garlic</td><td>Organic Zucchini</td><td>Organic Blueberries</td><td>Cucumber Kirby</td></tr>
+                    <tr><td>Organic Fuji Apple</td><td>Organic Lemon</td><td>Apple Honeycrisp Organic</td><td>Organic Grape Tomatoes</td></tr>
+                </table>
+                <br>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 20 items with the highest reorder fractions are: </p>
+                <table border="1">
+                    <tr><td>Raw Veggie Wrappers</td><td>Serenity Ultimate Extrema Overnight Pads</td><td>Orange Energy Shots</td><td>Chocolate Love Bar</td></tr>
+                    <tr><td>Soy Powder Infant Formula</td><td>Simply Sleep Nighttime Sleep Aid</td><td>Energy Shot, Grape Flavor</td><td>Russian River Valley Reserve Pinot Noir</td></tr>
+                    <tr><td>Sparking Water</td><td>Maca Buttercups</td><td>Bars Peanut Butter</td><td>Soy Crisps Lightly Salted</td></tr>
+                    <tr><td>Jet Fuel Dark Roast Whole Bean Coffee</td><td>High Gravity Lager</td><td>Benchbreak Chardonnay</td><td>Buttery Spray</td></tr>
+                    <tr><td>Almond Orgeat Syrup</td><td>Organic Blueberry B Mega</td><td>Beer Can</td><td>Amazake Almond Shake</td></tr>
+                </table>
+                <br>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I immediately notices that there was no overlap between these two lists, and the items with the highest reorder fractions were pretty random items. The items with high reorder fractions were actually items which were not ordered often, but the few times that they were ordered were mostly reorders. To correct for this, I added Bayesian Smoothing to my calculation of reorder fraction. I used a modest smoothing parameter of 100, so the equation became: </p>
+                <p style="text-align: center"> reorders / (orders + 100) </p>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 20 items with the highest reorder fractions now are: </p>
+                <table border="1">
+                    <tr><td>Whole Organic Omega 3 Milk</td><td>Milk, Organic, Vitamin D</td><td>Organic Lactose Free Whole Milk</td><td>Organic Reduced Fat Milk</td></tr>
+                    <tr><td>Banana</td><td>Organic Homogenized Whole Milk</td><td>Organic Lowfat 1% Milk</td><td>Goat Milk</td></tr>
+                    <tr><td>Half And Half Ultra Pasteurized</td><td>Organic  Whole Milk</td><td>Bag of Organic Bananas</td><td>Organic Milk Reduced Fat, 2% Milkfat</td></tr>
+                    <tr><td>Organic Whole Milk</td><td>Organic Fat Free Milk</td><td>Organic Low Fat Milk</td><td>Organic Reduced Fat Omega-3 Milk</td></tr>
+                    <tr><td>0% Greek Strained Yogurt</td><td>Organic Whole Milk with DHA Omega-3</td><td>Italian Sparkling Mineral Water</td><td>Spring Water</td></tr>
+                </table>
+                <br>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Now there is some overlap between the two lists and the items with high reorder fractions are items that you would believe to be reordered often, such as milk or bananas. While I've seen plenty of analysis of reorder fraction on Kaggle, I haven't seen anyone apply Bayesian smoothing, which is something I think everyone should consider.</p>
+                <br>
+                <h2> Non-Machine Learning Models </h2>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I tried out a few models that did not use machine learning. These models and their scores were: </p>
+                <ul><li> All items ever ordered by user - 0.2164845</li>
+                <li> All items ever reordered by user - 0.2996690 </li>
+                <li> Repeat most recent order by user - 0.3118026 </li>
+                <li> Repeat most recent reordered items by user - 0.3093626 </li></ul>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The best score so far was by just repeating the most recent order. To put these scores in perspective, the highest score on Kaggle at the moment is a 0.4. </p>
+                <br>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; My next steps would be to start applying some maching learning models to the data and see if I can improve my score.</p>
                 
             </div><!-- /.blog-post -->
             
